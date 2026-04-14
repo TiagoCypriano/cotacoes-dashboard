@@ -1,28 +1,11 @@
-FROM eclipse-temurin:17-jdk-alpine as build
+FROM node:18-alpine as build
 WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-# Copiar arquivos do Maven
-COPY mvnw .
-COPY .mvn .mvn
-COPY pom.xml .
-
-# Dar permissao de execucao ao mvnw
-RUN chmod +x ./mvnw
-
-# Baixar dependencias
-RUN ./mvnw dependency:go-offline -B
-
-# Copiar codigo fonte
-COPY src src
-
-# Buildar o projeto
-RUN ./mvnw clean package -DskipTests
-
-# Imagem final
-FROM eclipse-temurin:17-jre-alpine
-WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
-
-EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
