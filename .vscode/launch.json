@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CotacoesApplication",
+            "request": "launch",
+            "mainClass": "com.tiago.cotacoes.CotacoesApplication",
+            "projectName": "cotacoes"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "com.aluguelcarro.main.Main"
+        }
+    ]
+}

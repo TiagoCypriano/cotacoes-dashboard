@@ -24,7 +24,7 @@ function App() {
 
   const carregarDados = async () => {
     try {
-      const res = await fetch("http://localhost:8080/cotacoes");
+      const res = await fetch("https://cotacoes-dashboard-production.up.railway.app/cotacoes");
       const json = await res.json();
       setDados(json);
     } catch (erro) {
